@@ -1,0 +1,27 @@
+{
+  "name": "digitallibrary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jkroeger123/DigitalLibrary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jkroeger123/DigitalLibrary/issues"
+  },
+  "homepage": "https://github.com/Jkroeger123/DigitalLibrary#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.1",
+    "express-session": "^1.17.1",
+    "mongodb": "^3.6.6"
+  }
+}
