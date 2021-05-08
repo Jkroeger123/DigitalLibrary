@@ -26,7 +26,7 @@ function GetTrendingMovies(){
                 let newMovie = {
                     "tmdbID": show.id,
                     "reviews": [],
-                    "averageRating": 0
+                    "averageRating": "0"
                 };
                 moviesCollection.insert(newMovie, function (err){
                     if(err){

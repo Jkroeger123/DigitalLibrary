@@ -4,6 +4,9 @@ const discussions = mongoCollections.discussions;
 let { ObjectId } = require('mongodb');
 
 function GetRecentDiscussions(){
+    /* Query the database for discussion documents sorted by data posted
+        Return first N discussions */
+
     let discussionList=[]
     const discussionsCollection = await discussions();
     discussionsCollection.forEach((discussion) => {
