@@ -7,18 +7,18 @@ async function GetRecentDiscussions(){
     /* Query the database for discussion documents sorted by data posted
         Return first N discussions */
 
-    let discussionList=[]
     const discussionsCollection = await discussions();
 
-    discussionsCollection.forEach((discussion) => {
-        discussionList.push(discussion);
-    });
+    let discussionList = await discussionsCollection.find({}).toArray();
+
     let sortedDiscussionList=discussionList.sort((a, b) => new Date(b.dateOfReview) - new Date(a.dateOfReview));
     let result = [];
+
     // Just an example N=20, is subject to change
     for(let i=0; i<20; i++){
         result.push(sortedDiscussionList[i]);
     }
+
     return result;
 }
 
@@ -41,14 +41,18 @@ async function GetDiscussionsByMovieID(id){
     }
 
     const discussionsCollection = await discussions();
-    discussionsCollection.forEach((discussion) => {
+
+    let discussionList = await discussionsCollection.find({}).toArray();
+
+    discussionList.forEach((discussion) => {
         if(discussion.movieId === id){
             let final = discussion;
             final._id=discussion._id.toString();
             discussionsMovieId.push(final);
         }
     })
-    return discussionsMovieID;
+
+    return discussionsMovieId;
 }
 
 async function GetDiscussionByID(id){

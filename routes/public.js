@@ -9,12 +9,22 @@ const router = express.Router();
 router.get('/', async (req, res) =>{
 
     //Fetch Trending Movies from DB
-    let trendingMovies = await movieData.GetTrendingMovies();
-    //let recentDiscussions = await discussionData.GetRecentDiscussions();
+
+    let trendingMovies;
+    let recentDiscussions;
+
+    try {
+        trendingMovies = await movieData.GetTrendingMovies();
+        recentDiscussions = await discussionData.GetRecentDiscussions();
+    } catch (error) {
+        console.log(error);
+        //deal with error somehow
+    }
+    
 
     let pageData = {
-        trending: trendingMovies
-        //recentDiscussions: recentDiscussions
+        trending: trendingMovies,
+        recentDiscussions: recentDiscussions
     }
 
     res.render("home", {data: pageData});
@@ -23,8 +33,16 @@ router.get('/', async (req, res) =>{
 
 router.get('/movie/:movieID', async(req, res)=>{
 
-    let movie = await movieData.GetMovieByID(req.params.movieID);
-    let discussions = await discussionData.GetDiscussionsByMovieID(req.params.movieID);
+    let movie;
+    let discussions;
+
+    try {
+        movie = await movieData.GetMovieByID(req.params.movieID);
+        discussions = await discussionData.GetDiscussionsByMovieID(req.params.movieID); 
+    } catch (error) {
+        console.log(error);
+    }
+    
 
     let pageData = {
         movie: movie,

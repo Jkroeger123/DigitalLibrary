@@ -30,7 +30,7 @@ async function GetTrendingMovies(){
                     "reviews": [],
                     "averageRating": "0"
                 };
-                moviesCollection.insert(newMovie, function (err){
+                moviesCollection.insertOne(newMovie, function (err){
                     if(err){
                         throw "Movie not inserted successfully";
                     }
@@ -65,7 +65,8 @@ async function GetMovieByID(id){
     }
 
     const moviesCollection = await movies();
-    const movie = await moviesCollection.findOne({ tmdbID: id });
+    const movie = await moviesCollection.findOne({ tmdbID: parseInt(id) });
+    
     if(!movie){
         throw 'Movie not found.';
     }
