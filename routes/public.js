@@ -7,14 +7,14 @@ const router = express.Router();
 
 //HomePage
 router.get('/', async (req, res) =>{
-    
+
     //Fetch Trending Movies from DB
     let trendingMovies = await movieData.GetTrendingMovies();
-    let recentDiscussions = await discussionData.GetRecentDiscussons();
+    //let recentDiscussions = await discussionData.GetRecentDiscussions();
 
     let pageData = {
-        trending: trendingMovies,
-        recentDiscussions: recentDiscussions
+        trending: trendingMovies
+        //recentDiscussions: recentDiscussions
     }
 
     res.render("home", {data: pageData});

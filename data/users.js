@@ -3,7 +3,7 @@ const users = mongoCollections.users;
 const movies = mongoCollections.movies;
 
 
-function GetUserByUserName(username){
+async function GetUserByUserName(username){
     // Return the user document with username
 
     // Error checking
@@ -32,7 +32,7 @@ function GetUserByUserName(username){
     }
 }
 
-function AddToWatchList(movieID, username){
+async function AddToWatchList(movieID, username){
     // Adds the provided movieID to the watchlist array of user with username
 
     // Error checking
@@ -73,7 +73,7 @@ function AddToWatchList(movieID, username){
     
 }
 
-function RateMovie(movieID, rating, username){
+async function RateMovie(movieID, rating, username){
     /* Add the movieID to the user reviewList with username
     Update the movie average rating to account for the new data */
 

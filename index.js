@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 var exphbs = require('express-handlebars');
+const mongoConnection = require("./config/mongoConnection");
 const app = express();
 
 const configRoutes = require('./routes');

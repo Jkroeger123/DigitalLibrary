@@ -3,12 +3,13 @@ const discussions = mongoCollections.discussions;
 
 let { ObjectId } = require('mongodb');
 
-function GetRecentDiscussions(){
+async function GetRecentDiscussions(){
     /* Query the database for discussion documents sorted by data posted
         Return first N discussions */
 
     let discussionList=[]
     const discussionsCollection = await discussions();
+
     discussionsCollection.forEach((discussion) => {
         discussionList.push(discussion);
     });
@@ -21,7 +22,7 @@ function GetRecentDiscussions(){
     return result;
 }
 
-function GetDiscussionsByMovieID(id){
+async function GetDiscussionsByMovieID(id){
     // Query the database for all discussions from a movie id
     let discussionsMovieId = [];
 
@@ -50,7 +51,7 @@ function GetDiscussionsByMovieID(id){
     return discussionsMovieID;
 }
 
-function GetDiscussionByID(id){
+async function GetDiscussionByID(id){
     // Return the discussion document with an _id of id
 
     // Error checking for id
