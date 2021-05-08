@@ -30,13 +30,14 @@ async function GetTrendingMovies(){
                     "reviews": [],
                     "averageRating": "0"
                 };
-                moviesCollection.insert(newMovie, function (err){
-                    if(err){
-                        throw "Movie not inserted successfully";
-                    }
+                const insertInformation = moviesCollection.insertOne(newMovie);
+                if(insertInformation.insertedCount === 0){
+                    throw "Movie not inserted successfully";
+                }
+                else{
                     let _id=newMovie.tmdbID;
                     idArray.push(_id);
-                });
+                }
             }
             else{
                 idArray.push(movie.tmdbID);
