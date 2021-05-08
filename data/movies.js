@@ -4,8 +4,6 @@ const axios = require("axios");
 
 const API_KEY = f800afc56a41eeb52666b5b8657cea5e;
 
-let { ObjectId } = require('mongodb');
-
 async function getPopularMovies(){
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
     return data; // this will be the array of shows objects
@@ -50,7 +48,7 @@ function GetMovieByID(id){
     // Returns the movie document with the id
 
     // Error checking for id
-    if(id === undefined || id === null){
+    if(!id){
         throw 'No id parameter is given to the GetMovieByID(id) function.';
     }
     if(typeof id !== 'string'){
@@ -63,14 +61,8 @@ function GetMovieByID(id){
         throw 'Input id in GetMovieByID(id) is only empty spaces.';
     }
 
-    let parsedId = ObjectId(id);
-
-    if(!(parsedId instanceof ObjectId)){
-        throw 'Input id in GetMovieByID(id) is not an instance of an ObjectId.';
-    }
-
     const moviesCollection = await movies();
-    const movie = await moviesCollection.findOne({ _id: parsedId });
+    const movie = await moviesCollection.findOne({ tmdbID: id });
     if(!movie){
         throw 'Movie not found.';
     }
