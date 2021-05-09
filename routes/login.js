@@ -17,8 +17,16 @@ router.post('/', async (req, res) =>{
     const { username, password } = req.body;
 
     let passwordMatch = false;
+    
+    let foundUser;
 
-    let foundUser = await userData.GetUserByUsername(username);
+    try {
+        foundUser = await userData.GetUserByUserName(username);
+    } catch (error) {
+        res.status(400);
+        return res.render('loginError');
+    }
+    
 
     //compare the login info
     if(foundUser)

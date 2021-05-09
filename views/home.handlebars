@@ -4,19 +4,33 @@
     <button onClick="window.location.href = '/login';" id="loginLink">Login</button>
 
     <!--add the rest-->
-    {{#each data.trending}}
-            <li>
-                {{this.title}}
-            </li>
-    {{/each}}
+    <ul>
+        {{#each data.trending}}
+                <li>
+                    <div class = "movie-display">
+                        <a href="/public/movie/{{this.id}}"><img src=https://image.tmdb.org/t/p/w500{{this.poster_path}} alt=""></a>
+                    </div>   
+                </li>
+        {{/each}}
+    </ul>
 
-    {{#each data.recentDiscussions}}
-            <li>
-                {{this.title}}
-            </li>
-    {{/each}}
+    <br>
 
+    <ul>
+        {{#each data.recentDiscussions}}
+                <li>
+                    {{this.title}}
+                </li>
+        {{/each}}
+    </ul>
 
+    <style>
+        .movie-display img
+        {
+            width: 10%;
+            height: 10%;
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
