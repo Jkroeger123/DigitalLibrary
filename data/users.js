@@ -138,8 +138,67 @@ async function RateMovie(movieID, rating, username){
     }
 }
 
+async function CreateUser(userName, hashedPassword, Email, firstName, lastName, City, State, Age)
+{
+    //TODO: Finish Error Checking
+
+    userName = userName.trim();
+    Email = Email.trim();
+    firstName = firstName.trim();
+    lastName = lastName.trim();
+    City = City.trim();
+    State = State.trim();
+
+    if(!userName) throw "No Username Provided";
+    if(!Email) throw "No Email Provided";
+    if(!firstName) throw "No First Name Provided";
+    if(!lastName) throw "No Last Name Provided";
+    if(!City) throw "No City Provided";
+    if(!State) throw "No State Provided";
+    if(!hashedPassword) throw "No Password Provided";
+    if(!Age) throw "No Age Provided";
+
+
+    const usersCollection  = await users();
+
+    //Throw exception if email is in use
+    await usersCollection.findOne({Email: Email}).then((user) => {
+        if (user) throw "Email Already In Use";
+    });
+
+    await usersCollection.findOne({userName: userName}).then((user) => {
+        if (user) throw "Username Already In Use";
+    });
+
+
+    let newUser = {
+        userName: userName,
+        encryptedPassword: hashedPassword,
+        Email: Email,
+        firstName: firstName,
+        lastName: lastName,
+        City: City,
+        State: State,
+        Age: Age,
+        userPosts: [],
+        userReviews: [],
+        movieList: []
+    };
+
+    const insertInformation = usersCollection.insertOne(newUser);
+
+    if(insertInformation.insertedCount === 0){
+        throw "User not inserted successfully";
+    }
+    else{
+        return newUser;
+    }
+
+}
+
 module.exports = {
     GetUserByUserName,
     AddToWatchList,
-    RateMovie
+    RateMovie,
+    CreateUser
 }

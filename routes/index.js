@@ -2,10 +2,13 @@ const private = require('./private');
 const public = require('./public');
 const login = require('./login');
 const logout = require('./logout');
+const signup = require('./signup');
 
 const routerMethod = (app) => {
 
   app.use('/private', private);
+
+  app.use('/signup', signup);
 
   app.use('/public', public);
 

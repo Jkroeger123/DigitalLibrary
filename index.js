@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 var exphbs = require('express-handlebars');
-const mongoConnection = require("./config/mongoConnection");
 const app = express();
 
 const configRoutes = require('./routes');
@@ -28,7 +27,18 @@ app.use('/private', async (req, res, next) =>{
     if (req.session.user) return next();
 
     res.status(403);
-    res.redirect('/login');
+
+    res.redirect(`/public${req.path}`);
+
+});
+
+app.use('/public', async(req, res, next) =>{
+
+    if(!req.session.user) return next();
+
+    res.status(403);
+    
+    res.redirect(`/private${req.path}`);
 
 });
 

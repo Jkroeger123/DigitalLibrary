@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', async(req, res) =>{
     
-    let user = await userData.GetUserByUsername(req.session.user.username);
+    let user = await userData.GetUserByUserName(req.session.user.username);
 
     //Fetch User Watchlist  
     let watchList = user.movieList;

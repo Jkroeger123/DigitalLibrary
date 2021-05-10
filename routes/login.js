@@ -14,7 +14,15 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) =>{
 
-    const { username, password } = req.body;
+    let { username, password } = req.body;
+
+    if(!username || !password || typeof(username) != 'string' || typeof(password) != 'string' || username == "" || password == "")
+    {
+        res.status(400);
+        return res.render('loginError');
+    }
+
+    username = username.toLocaleLowerCase();
 
     let passwordMatch = false;
     

@@ -15,7 +15,7 @@ async function GetRecentDiscussions(){
     let result = [];
 
     // Just an example N=20, is subject to change
-    for(let i=0; i<20; i++){
+    for(let i=0; i< Math.min(sortedDiscussionList.length, 20); i++){
         result.push(sortedDiscussionList[i]);
     }
 
