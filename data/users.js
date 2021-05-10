@@ -1,4 +1,5 @@
 const mongoCollections = require('../config/mongoCollections');
+const { move } = require('../routes/login');
 const users = mongoCollections.users;
 const movies = mongoCollections.movies;
 
@@ -62,13 +63,19 @@ async function AddToWatchList(movieID, username){
     }
 
     const usersCollection = await users();
+    const moviesCollection = await movies();
     const user = await usersCollection.findOne({ userName: username });
     if(!user){
         throw 'User not found.';
     }
     else{
-        user.movieList.push(movieID);
-        usersCollection.update({ userName: username }, { $set: user });
+
+        await moviesCollection.findOne({tmdbID: movieID}).then((movie) => {
+            if(!movie)  throw "Movie Not Found";
+            user.movieList.push(movieID);
+            usersCollection.updateOne({ userName: username }, { $set: user });
+        });
+        
     }
     
 }
