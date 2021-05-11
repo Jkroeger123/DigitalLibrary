@@ -1,5 +1,4 @@
 const mongoCollections = require('../config/mongoCollections');
-const { move } = require('../routes/login');
 const users = mongoCollections.users;
 const movies = mongoCollections.movies;
 
