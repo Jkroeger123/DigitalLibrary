@@ -112,8 +112,8 @@ async function GetMoviesByName(name){
     const moviesCollection = await movies();
     let idArray = [];
 
-    const movieList = pullMoviesByName(name);
-
+    const movieList = await pullMoviesByName(name);
+    
     for(show of movieList.results)
     {
         await moviesCollection.findOne({tmdbID: show.id}).then((movie) => {

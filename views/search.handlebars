@@ -4,13 +4,13 @@
     <form id="searchForm">
         <label for="search_term"></label>
         <input type="text" id="search_term" required>
-        <input type="submit">
+        <button id="searchBtn">Search</button>
     </form>
 
     <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
 
     <!--add the rest-->
-    <ul>
+    <ul id = "movie-list">
         {{#each data.trending}}
                 <li>
                     <div class = "movie-display">
@@ -38,7 +38,7 @@
         }
     </style>
 
-    <script src="search.js"></script>
+    <script src="/search.js"></script>
 
 
 </div>

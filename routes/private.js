@@ -117,6 +117,37 @@ router.post('/rate/:movieID', async (req, res)=>{
     
 });
 
+//used to access the movies search from the api
+router.get('/search/:search_term', async(req, res) =>{
+
+    let search_term = req.params.search_term;
+    
+    if(search_term == undefined || typeof(search_term) != 'string' || search_term.trim() == "")
+    {
+        return res.send("No Search Term");
+    }
+
+    try {
+        let movies = await movieData.GetMoviesByName(search_term);
+        
+        let movieList = [];
+
+        for(id of movies)
+        {
+            movieList.push(await movieData.GetTMDBMovie(id));
+        }
+        
+        res.send(movieList);
+
+    } catch (error) {
+        res.send(error);
+    }
+    
+
+    
+
+});
+
 router.get('/search', async(req, res) =>{
     let trendingMovies;
     let recentDiscussions;
