@@ -9,6 +9,12 @@ async function getPopularMovies(){
     return data; // this will be the array of shows objects
 }
 
+async function pullMoviesByName(name){
+    const URI = encodeURI(name);
+    const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${URI}&page=1&include_adult=false`);
+    return data; // this will be the array of shows objects
+}
+
 async function GetTrendingMovies(){
     /* Send a Request to the movie database api for top movies (https://developers.themoviedb.org/3/movies/get-popular-movies) 
         For each movie it returns in the array, check if our database has that movie:
@@ -83,8 +89,62 @@ async function GetTMDBMovie(id)
     return data;
 }
 
+async function GetMoviesByName(name){
+    /* Send a request to the movie database api with a query of name
+        For each movie it returns in the array, check if the database has that movie
+        If it doesnt, add it to the database where _id is tmdbID
+        Return an array of the tmdbIDs */
+
+    // Error checking for name
+    if(!name){
+        throw 'No name parameter is given to the GetMoviesByName(name) function.';
+    }
+    if(typeof name !== 'string'){
+        throw 'Input name in GetMoviesByName(name) is not of type string.';
+    }
+    if(name.length == 0){
+        throw 'Input name in GetMoviesByName(name) length is 0, empty string.';
+    }
+    if(name.replace(/\s/g, '').length == 0) {
+        throw 'Input name in GetMoviesByName(name) is only empty spaces.';
+    }
+
+    const moviesCollection = await movies();
+    let idArray = [];
+
+    const movieList = pullMoviesByName(name);
+
+    for(show of movieList.results)
+    {
+        await moviesCollection.findOne({tmdbID: show.id}).then((movie) => {
+            if(!movie){
+                let newMovie = {
+                    "tmdbID": show.id,
+                    "reviews": [],
+                    "averageRating": "0"
+                };
+                const insertInformation = moviesCollection.insertOne(newMovie);
+                if(insertInformation.insertedCount === 0){
+                    throw "Movie not inserted successfully";
+                }
+                else{
+                    let _id=newMovie.tmdbID;
+                    idArray.push(_id);
+                }
+            }
+            else{
+                idArray.push(movie.tmdbID);
+            }
+        });
+    }
+
+    return idArray;
+
+}
+
 module.exports = {
     GetTrendingMovies,
     GetMovieByID,
-    GetTMDBMovie
+    GetTMDBMovie,
+    GetMoviesByName
 }
