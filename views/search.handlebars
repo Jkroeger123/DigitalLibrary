@@ -1,7 +1,13 @@
 <div class="home">
-    <h1>Cool Website Name</h1>
-    
-    <button onClick="window.location.href = '/login';" id="loginLink">Login</button>
+    <h1>Search</h1>
+
+    <form id="searchForm">
+        <label for="search_term"></label>
+        <input type="text" id="search_term" required>
+        <input type="submit">
+    </form>
+
+    <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
 
     <!--add the rest-->
     <ul>
@@ -32,7 +38,7 @@
         }
     </style>
 
-    <script src="homeJs.js"></script>
+    <script src="search.js"></script>
 
 
 </div>

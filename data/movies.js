@@ -50,7 +50,6 @@ async function GetTrendingMovies(){
 
 async function GetMovieByID(id){
     // Returns the movie document with the id
-
     // Error checking for id
     if(!id){
         throw 'No id parameter is given to the GetMovieByID(id) function.';
@@ -78,7 +77,14 @@ async function GetMovieByID(id){
     }
 }
 
+async function GetTMDBMovie(id)
+{
+    let {data} = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+    return data;
+}
+
 module.exports = {
     GetTrendingMovies,
-    GetMovieByID
+    GetMovieByID,
+    GetTMDBMovie
 }

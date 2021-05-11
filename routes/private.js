@@ -1,5 +1,4 @@
 //this should serve views that can only be viewed when logged in
-
 const express = require('express');
 const movieData = require('../data/movies');
 const discussionData = require('../data/discussions');
@@ -15,9 +14,11 @@ router.get('/', async(req, res) =>{
     let movies = [];
 
     //Build Movie Object Array from array of movie IDs
-    watchList.forEach(id => {
-        movies.push(movieData.GetMovieByID(id));
-    });
+    for(id of watchList)
+    {
+        let mov = await movieData.GetTMDBMovie(id);
+        movies.push(mov);
+    }
 
     //Fetch User Discussions
     let discussionList = user.userPosts;
@@ -40,12 +41,27 @@ router.get('/', async(req, res) =>{
 })
 
 router.get('/movie/:movieID', async (req, res) =>{
-    let user = await userData.GetUserByUsername(req.session.user.username);
-    let movie = await movieData.GetMovieByID(req.params.movieID);
-    let discussions = await discussionData.GetDiscussionsByMovieID(req.params.movieID);
 
+    let user;
+    let movie;
+    let discussions;
+    let tmdbMovie;
+
+    try {
+        user = await userData.GetUserByUserName(req.session.user.username);
+        movie = await movieData.GetMovieByID(req.params.movieID);
+        tmdbMovie = await movieData.GetTMDBMovie(req.params.movieID);
+        discussions = await discussionData.GetDiscussionsByMovieID(req.params.movieID);
+        if(movie.averageRating == 0) movie.averageRating = "No Ratings Yet!";
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+    
+   
     let pageData = {
         movie: movie,
+        tmdbMovie: tmdbMovie,
         discussions: discussions,
         userData: user
     }
@@ -53,16 +69,82 @@ router.get('/movie/:movieID', async (req, res) =>{
     res.render('privateMovie', {data: pageData});
 });
 
+router.get('/watchlist', async(req, res)=>{
+    let user = await userData.GetUserByUserName(req.session.user.username);
+    res.json({data: user.movieList});
+});
+
 router.post('/watchlist/:movieID', async (req, res)=>{
-    await userData.AddToWatchList(req.params.movieID, req.session.user.username);
+    try {
+        await userData.AddToWatchList(req.params.movieID, req.session.user.username);
+        res.send("Added");
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+    
+});
+
+router.post('/watchlist/remove/:movieID', async(req, res) =>{
+    try {
+        await userData.RemoveFromWatchList(req.params.movieID, req.session.user.username);
+        res.send("Added");
+    } catch (error) {
+        res.send(error);
+    }
 });
 
 router.post('/discussion/:movieID', async (req, res)=>{
     //TODO
 });
 
+
+router.get('/rating', async(req, res)=>{
+    let user = await userData.GetUserByUserName(req.session.user.username);
+    res.json({data: user.userReviews});
+})
+
 router.post('/rate/:movieID', async (req, res)=>{
-    await userData.RateMovie(req.params.movieID, req.body.rating, req.session.user.username);
+
+    let {review, rating} = req.body;
+
+    try {
+        let newRating = await userData.RateMovie(req.params.movieID, rating, req.session.user.username);
+        res.json({averageRating: newRating});
+    } catch (error) {
+        console.log(error);
+    }
+    
 });
+
+router.get('/search', async(req, res) =>{
+    let trendingMovies;
+    let recentDiscussions;
+
+    let moviesObjects = [];
+
+    try {
+        trendingMovies = await movieData.GetTrendingMovies();
+
+        for(id of trendingMovies)
+        {
+            let data = await movieData.GetTMDBMovie(id);
+            moviesObjects.push(data);
+        }
+
+        recentDiscussions = await discussionData.GetRecentDiscussions();
+    } catch (error) {
+        console.log(error);
+        //deal with error somehow
+    }
+    
+
+    let pageData = {
+        trending: moviesObjects,
+        recentDiscussions: recentDiscussions
+    }
+
+    res.render("search", {data: pageData});
+})
 
 module.exports = router;

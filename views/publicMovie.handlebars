@@ -1,1 +1,9 @@
-<h1>{{data.movie.tmdbID}}</h1>
+<h1 id = "movie-id" hidden>{{data.movie.tmdbID}}</h1>
+
+<button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+
+<div id="movie-info">
+    <h1>{{data.tmdbMovie.title}}</h1>
+    <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster">
+    <h2>Average User Rating: {{data.movie.averageRating}}</h2>
+</div>

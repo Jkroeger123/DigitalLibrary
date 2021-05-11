@@ -1,2 +1,36 @@
-<h1>{{data.movie.tmdbID}}</h1>
+<h1 id = 'movie-id' hidden>{{data.movie.tmdbID}}</h1>
 
+
+<button id="watchlist-btn">Add to Watch List</button>
+<button id = "discussion-btn">Create a Discussion</button>
+
+<br>
+
+<div id="rating-form">
+
+    <h2>Leave A Review</h2>
+
+    <form>
+        <label for="rating">Rating (1-10)</label>
+        <input type="number" name = "rating" id="rating" min="1" max="10" required>
+        <br>
+        <label for="review">Review</label>
+        <input type="text" name="review" id="review" required>
+        <br>
+        <button id="send-review">Send Review</button>
+    </form>
+</div>
+
+<button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+
+
+
+<div id="movie-info">
+    <h1>{{data.tmdbMovie.title}}</h1>
+    <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster">
+    <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
+</div>
+
+
+
+<script src = "/privateMovie.js"></script>

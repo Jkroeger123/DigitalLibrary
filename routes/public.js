@@ -3,9 +3,7 @@
 const express = require('express');
 const movieData = require('../data/movies');
 const discussionData = require('../data/discussions');
-const axios = require('axios');
 const router = express.Router();
-const API_KEY = "f800afc56a41eeb52666b5b8657cea5e";
 
 
 //HomePage
@@ -23,7 +21,7 @@ router.get('/', async (req, res) =>{
 
         for(id of trendingMovies)
         {
-            let {data} = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+            let data = await movieData.GetTMDBMovie(id);
             moviesObjects.push(data);
         }
 
@@ -47,18 +45,21 @@ router.get('/movie/:movieID', async(req, res)=>{
 
     let movie;
     let discussions;
+    let tmdbMovie;
 
     try {
         movie = await movieData.GetMovieByID(req.params.movieID);
+        tmdbMovie = await movieData.GetTMDBMovie(req.params.movieID);
         discussions = await discussionData.GetDiscussionsByMovieID(req.params.movieID); 
+        if(movie.averageRating == 0) movie.averageRating = "No Ratings Yet!";
     } catch (error) {
         console.log(error);
     }
-    
 
     let pageData = {
         movie: movie,
-        discussions: discussions
+        discussions: discussions,
+        tmdbMovie: tmdbMovie
     }
 
     res.render('publicMovie', {data: pageData});

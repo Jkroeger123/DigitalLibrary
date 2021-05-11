@@ -1,1 +1,25 @@
-TODO
+<section>
+    
+    <h1>{{data.userData.userName}}</h1>
+
+    <button onClick="window.location.href = '/logout';" id="logout-btn">Log Out</button>
+
+    <button onClick="window.location.href = '/private/search';" id="search-btn">Search</button>
+
+    <ul>
+        {{#each data.watchList}}
+            <li>
+                <a href="/private/movie/{{this.id}}">{{this.title}}</a>
+            </li>
+        {{/each}}
+    </ul>
+
+    <ul>
+        {{#each data.discussions}}
+            <li>
+                {{this.discussionTitle}}
+            </li>
+        {{/each}}
+    </ul>
+
+</section>
