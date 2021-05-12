@@ -1,5 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const discussions = mongoCollections.discussions;
+const users = mongoCollections.users;
+const movies = mongoCollections.movies;
 
 let { ObjectId } = require('mongodb');
 
@@ -90,8 +92,187 @@ async function GetDiscussionByID(id){
     }
 }
 
+async function CreateDiscussion(username, movieID, discussionTitle, discussionContent){
+    /* Create a discussion document with the provided parameters
+        Fill in the unprovided schema values such as the date. Replies array, etc. */
+
+    // Error checking
+    if(!username){
+        throw 'No username parameter is given to the CreateDiscussion(username, movieID, discussionTitle, discussionContent) function.';
+    }
+    if(typeof username !== 'string'){
+        throw 'Input username in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is not of type string.';
+    }
+    if(username.length == 0){
+        throw 'Input username in CreateDiscussion(username, movieID, discussionTitle, discussionContent) length is 0, empty string.';
+    }
+    if(username.replace(/\s/g, '').length == 0) {
+        throw 'Input username in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is only empty spaces.';
+    }
+    if(!movieID){
+        throw 'No movieID parameter is given to the CreateDiscussion(username, movieID, discussionTitle, discussionContent) function.';
+    }
+    if(typeof movieID !== 'string'){
+        throw 'Input movieID in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is not of type string.';
+    }
+    if(movieID.length == 0){
+        throw 'Input movieID in CreateDiscussion(username, movieID, discussionTitle, discussionContent) length is 0, empty string.';
+    }
+    if(movieID.replace(/\s/g, '').length == 0) {
+        throw 'Input movieID in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is only empty spaces.';
+    }
+    if(!discussionTitle){
+        throw 'No discussionTitle parameter is given to the CreateDiscussion(username, movieID, discussionTitle, discussionContent) function.';
+    }
+    if(typeof discussionTitle !== 'string'){
+        throw 'Input discussionTitle in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is not of type string.';
+    }
+    if(discussionTitle.length == 0){
+        throw 'Input discussionTitle in CreateDiscussion(username, movieID, discussionTitle, discussionContent) length is 0, empty string.';
+    }
+    if(discussionTitle.replace(/\s/g, '').length == 0) {
+        throw 'Input discussionTitle in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is only empty spaces.';
+    }
+    if(!discussionContent){
+        throw 'No discussionContent parameter is given to the CreateDiscussion(username, movieID, discussionTitle, discussionContent) function.';
+    }
+    if(typeof discussionContent !== 'string'){
+        throw 'Input discussionContent in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is not of type string.';
+    }
+    if(discussionContent.length == 0){
+        throw 'Input discussionContent in CreateDiscussion(username, movieID, discussionTitle, discussionContent) length is 0, empty string.';
+    }
+    if(discussionContent.replace(/\s/g, '').length == 0) {
+        throw 'Input discussionContent in CreateDiscussion(username, movieID, discussionTitle, discussionContent) is only empty spaces.';
+    }
+
+    const discussionsCollection  = await discussions();
+
+    const usersCollection = await users();
+    const user = await usersCollection.findOne({ userName: username });
+    if(!user){
+        throw 'User not found.';
+    }
+
+    const moviesCollection = await movies();
+    const movie = await moviesCollection.findOne({ tmdbID: parseInt(id) });
+    if(!movie){
+        throw 'Movie not found.';
+    }
+
+    //Throw exception if discussionTitle is in use
+    await discussionsCollection.findOne({discussionTitle: discussionTitle}).then((discussion) => {
+        if (discussion) throw "Discussion Title Already Used";
+    });
+
+    let day = (today.getDate().toString()).padStart(2, '0');
+    let month = ((today.getMonth()+1).toString()).padStart(2, '0');
+    let year = today.getFullYear().toString();
+    let today=month+'/'+day+'/'+year;
+
+    let newDiscussion = {
+        postCreatorId: user._id,
+        movieId: movieID,
+        discussionTitle: discussionTitle,
+        discussionContent: discussionContent,
+        dateOfPosting: today,
+        replies: []
+    };
+
+    const insertInformation = discussionsCollection.insertOne(newDiscussion);
+
+    if(insertInformation.insertedCount === 0){
+        throw "Discussion not inserted successfully";
+    }
+    else{
+        return newDiscussion;
+    }
+}
+
+async function CreateDiscussionReply(discussionID, username, comment){
+    /* Create a comment subdocument under the discussion associated with the discussion id parameter
+        Again, fill in any non provided data that the schema calls for. */
+
+    // Error Checking
+    if(!discussionID){
+        throw 'No discussionID parameter is given to the CreateDiscussionReply(discussionID, username, comment) function.';
+    }
+    if(typeof discussionID !== 'string'){
+        throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) is not of type string.';
+    }
+    if(discussionID.length == 0){
+        throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) length is 0, empty string.';
+    }
+    if(discussionID.replace(/\s/g, '').length == 0) {
+        throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) is only empty spaces.';
+    }
+    if(!username){
+        throw 'No username parameter is given to the CreateDiscussionReply(discussionID, username, comment) function.';
+    }
+    if(typeof username !== 'string'){
+        throw 'Input username in CreateDiscussionReply(discussionID, username, comment) is not of type string.';
+    }
+    if(username.length == 0){
+        throw 'Input username in CreateDiscussionReply(discussionID, username, comment) length is 0, empty string.';
+    }
+    if(username.replace(/\s/g, '').length == 0) {
+        throw 'Input username in CreateDiscussionReply(discussionID, username, comment) is only empty spaces.';
+    }
+    if(!comment){
+        throw 'No comment parameter is given to the CreateDiscussionReply(discussionID, username, comment) function.';
+    }
+    if(typeof comment !== 'string'){
+        throw 'Input comment in CreateDiscussionReply(discussionID, username, comment) is not of type string.';
+    }
+    if(comment.length == 0){
+        throw 'Input comment in CreateDiscussionReply(discussionID, username, comment) length is 0, empty string.';
+    }
+    if(comment.replace(/\s/g, '').length == 0) {
+        throw 'Input comment in CreateDiscussionReply(discussionID, username, comment) is only empty spaces.';
+    }
+
+    const discussionsCollection  = await discussions();
+
+    let parsedId = ObjectId(id);
+
+    if(!(parsedId instanceof ObjectId)){
+        throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) is not an instance of an ObjectId.';
+    }
+
+    const discussion = await discussionsCollection.findOne({_id: discussionID});
+    if(!discussion){
+        throw "Discussion Not Found";
+    }
+
+    const usersCollection = await users();
+    const user = await usersCollection.findOne({ userName: username });
+    if(!user){
+        throw 'User not found.';
+    }
+
+    let day = (today.getDate().toString()).padStart(2, '0');
+    let month = ((today.getMonth()+1).toString()).padStart(2, '0');
+    let year = (today.getFullYear()).toString();
+    let today=month+'/'+day+'/'+year;
+
+    let newComment = {
+        commentorID: user._id,
+        dateOfPosting: today,
+        comment: comment,
+        replies: []
+    }
+
+    discussion.replies.push(newComment);
+
+    discussionsCollection.updateOne({ _id: discussionID }, { $set: discussion });
+
+    return newComment;
+}
+
 module.exports = {
     GetRecentDiscussions,
     GetDiscussionsByMovieID,
-    GetDiscussionByID
+    GetDiscussionByID,
+    CreateDiscussion,
+    CreateDiscussionReply
 }
