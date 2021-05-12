@@ -35,7 +35,7 @@ async function GetTrendingMovies(){
                     "tmdbID": show.id,
                     "reviews": [],
                     "averageRating": "0",
-                     "description" : show.overview
+                    "description" : show.overview
                 };
                 const insertInformation = moviesCollection.insertOne(newMovie);
                 if(insertInformation.insertedCount === 0){
@@ -122,7 +122,8 @@ async function GetMoviesByName(name){
                 let newMovie = {
                     "tmdbID": show.id,
                     "reviews": [],
-                    "averageRating": "0"
+                    "averageRating": "0",
+                    "description" : show.overview
                 };
                 const insertInformation = moviesCollection.insertOne(newMovie);
                 if(insertInformation.insertedCount === 0){
