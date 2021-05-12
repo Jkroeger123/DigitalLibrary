@@ -4,6 +4,37 @@
 
     CheckRating();
 
+    $("#discussion-btn").click(function (event){
+
+        $("#discussion-form").show();
+
+    });
+
+    $('#send-discussion').click(function(event){
+        event.preventDefault();
+
+        //Error handling, should do more??
+        if($("#discussionTitle").val() == undefined || $("#discussionTitle").val().trim() == "") return;
+        if($("#discussionContent").val() == undefined || $("#discussionContent").val().trim() == "") return;
+
+        let requestConfig = {
+            method: 'POST',
+            url: `/private/discussion/${$('#movie-id').html()}`,
+            data: {discussionTitle: $("#discussionTitle").val(),
+                    discussionContent: $("#discussionContent").val()
+                   }
+        };
+
+        $.ajax(requestConfig).then(function(response){
+
+            $("#discussion-form").hide();
+
+            window.location.href = `/private/discussion/${response}`;
+
+        });     
+
+    });
+
     function CheckRating()
     {
         let requestConfig = {

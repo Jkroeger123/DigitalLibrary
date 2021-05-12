@@ -7,3 +7,15 @@
     <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster">
     <h2>Average User Rating: {{data.movie.averageRating}}</h2>
 </div>
+
+<div id= "movie-discussions">
+    <h2>Discussions</h2>
+    <ul>
+        {{#each data.discussions}}
+                <li>
+                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                </li>
+        {{/each}}
+    </ul>
+</div>
+

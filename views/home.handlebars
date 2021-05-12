@@ -19,7 +19,7 @@
     <ul>
         {{#each data.recentDiscussions}}
                 <li>
-                    {{this.title}}
+                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
                 </li>
         {{/each}}
     </ul>

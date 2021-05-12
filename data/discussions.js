@@ -60,6 +60,8 @@ async function GetDiscussionsByMovieID(id){
 async function GetDiscussionByID(id){
     // Return the discussion document with an _id of id
 
+    id = id.toString();
+
     // Error checking for id
     if(!id){
         throw 'No id parameter is given to the GetDiscussionByID(id) function.';
@@ -165,10 +167,12 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
         if (discussion) throw "Discussion Title Already Used";
     });
 
-    let day = (today.getDate().toString()).padStart(2, '0');
+    let today = new Date();
+
+    /*let day = (today.getDate().toString()).padStart(2, '0');
     let month = ((today.getMonth()+1).toString()).padStart(2, '0');
     let year = today.getFullYear().toString();
-    let today=month+'/'+day+'/'+year;
+    today=month+'/'+day+'/'+year;*/
 
     let newDiscussion = {
         postCreatorId: user._id,
@@ -179,7 +183,10 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
         replies: []
     };
 
-    const insertInformation = discussionsCollection.insertOne(newDiscussion);
+    const insertInformation = await discussionsCollection.insertOne(newDiscussion);
+
+    user.userPosts.push(newDiscussion._id);
+    usersCollection.updateOne({ userName: username }, { $set: user });
 
     if(insertInformation.insertedCount === 0){
         throw "Discussion not inserted successfully";

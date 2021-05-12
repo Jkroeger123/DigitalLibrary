@@ -66,4 +66,16 @@ router.get('/movie/:movieID', async(req, res)=>{
 
 });
 
+router.get('/discussion/:discussionID', async(req, res)=>{
+
+    try {
+        let discussion = await discussionData.GetDiscussionByID(req.params.discussionID);
+        res.render('publicDiscussion', {data: discussion}); 
+    } catch (error) {
+        res.status(400);
+        console.log(error);
+    }
+
+});
+
 module.exports = router;

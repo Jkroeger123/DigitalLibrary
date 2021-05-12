@@ -25,10 +25,10 @@ router.get('/', async(req, res) =>{
     let discussions = [];
 
     //Build Discussion Object Array from array of discussion IDs
-    discussionList.forEach(id => {
-        discussions.push(discussionData.GetDiscussionByID(id));
-    });
-
+    for(id of discussionList)
+    {
+        discussions.push(await discussionData.GetDiscussionByID(id));
+    }
 
     let pageData = {
         watchList: movies,
@@ -58,7 +58,6 @@ router.get('/movie/:movieID', async (req, res) =>{
         res.send(error);
     }
     
-   
     let pageData = {
         movie: movie,
         tmdbMovie: tmdbMovie,
@@ -94,8 +93,32 @@ router.post('/watchlist/remove/:movieID', async(req, res) =>{
     }
 });
 
+router.get('/discussion/:discussionID', async(req, res)=>{
+
+    try {
+        let discussion = await discussionData.GetDiscussionByID(req.params.discussionID);
+        res.render('privateDiscussion', {data: discussion}); 
+    } catch (error) {
+        res.status(400);
+        res.redirect('/');
+    }
+
+});
+
+//Route To Create a discussion
 router.post('/discussion/:movieID', async (req, res)=>{
-    //TODO
+    
+
+    let {discussionTitle, discussionContent} = req.body;
+
+    try {
+        let discussion = await discussionData.CreateDiscussion(req.session.user.username, req.params.movieID, discussionTitle, discussionContent);
+        res.send(discussion._id.toString());
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+    
 });
 
 

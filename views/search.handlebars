@@ -10,7 +10,7 @@
     <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
 
     <!--add the rest-->
-    <ul id = "movie-list">
+    <ul>
         {{#each data.trending}}
                 <li>
                     <div class = "movie-display">
@@ -22,10 +22,10 @@
 
     <br>
 
-    <ul>
+   <ul>
         {{#each data.recentDiscussions}}
                 <li>
-                    {{this.title}}
+                    <a href="/private/discussion/{{this._id}}">{{this.discussionTitle}}</a>
                 </li>
         {{/each}}
     </ul>

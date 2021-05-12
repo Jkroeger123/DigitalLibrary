@@ -6,20 +6,30 @@
 
     <button onClick="window.location.href = '/private/search';" id="search-btn">Search</button>
 
-    <ul>
-        {{#each data.watchList}}
-            <li>
-                <a href="/private/movie/{{this.id}}">{{this.title}}</a>
-            </li>
-        {{/each}}
-    </ul>
+    <div id="watch-list">
+        <h2>My Watch List</h2>
+        <ul>
+            {{#each data.watchList}}
+                <li>
+                    <a href="/private/movie/{{this.id}}">{{this.title}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    
 
-    <ul>
-        {{#each data.discussions}}
-            <li>
-                {{this.discussionTitle}}
-            </li>
-        {{/each}}
-    </ul>
+    <div id="discussion-list">
+        <h2>My Discussions</h2>
+        <ul>
+            {{#each data.discussions}}
+                    <li>
+                        <a href="/private/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                    </li>
+            {{/each}}
+        </ul>
+    </div>
+
+    
+
 
 </section>

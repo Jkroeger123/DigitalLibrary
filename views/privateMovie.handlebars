@@ -22,7 +22,20 @@
     </form>
 </div>
 
+<div id="discussion-form" hidden>
 
+    <h2>Start a Discussion</h2>
+
+    <form>
+        <label for="discussionTitle">Discussion Title</label>
+        <input type="text" name = "discussionTitle" id="discussionTitle" required>
+        <br>
+        <label for="discussionContent">Discussion Content</label>
+        <input type="text" name="discussionContent" id="discussionContent" required>
+        <br>
+        <button id="send-discussion">Create Discussion</button>
+    </form>
+</div>
 
 <div id="movie-info">
     <h1>{{data.tmdbMovie.title}}</h1>
@@ -30,6 +43,16 @@
     <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
 </div>
 
+<div id= "movie-discussions">
+    <h2>Discussions</h2>
+    <ul>
+        {{#each data.discussions}}
+                <li>
+                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                </li>
+        {{/each}}
+    </ul>
+</div>
 
 
 <script src = "/privateMovie.js"></script>
