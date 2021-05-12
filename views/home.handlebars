@@ -1,28 +1,37 @@
 <div class="home">
-    <h1>Cool Website Name</h1>
+
+    <h1>Flique</h1>
     
     <button onClick="window.location.href = '/login';" id="loginLink">Login</button>
 
-    <!--add the rest-->
-    <ul>
-        {{#each data.trending}}
-                <li>
-                    <div class = "movie-display">
-                        <a href="/public/movie/{{this.id}}"><img src=https://image.tmdb.org/t/p/w500{{this.poster_path}} alt=""></a>
-                    </div>   
-                </li>
-        {{/each}}
-    </ul>
+    <div id="movie-list">
+        <h2>Trending Movies</h2>
+        <ul>
+            {{#each data.trending}}
+                    <li>
+                        <div class = "movie-display">
+                            <a href="/public/movie/{{this.id}}"><img src=https://image.tmdb.org/t/p/w500{{this.poster_path}} alt=""></a>
+                        </div>   
+                    </li>
+            {{/each}}
+        </ul>
+    </div>
+    
 
     <br>
 
-    <ul>
-        {{#each data.recentDiscussions}}
-                <li>
-                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
-                </li>
-        {{/each}}
-    </ul>
+    <div id = "discussion-list">
+        <h2>Recent Discussions</h2>
+        <ul>
+            {{#each data.recentDiscussions}}
+                    <li>
+                        <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                    </li>
+            {{/each}}
+        </ul>
+    </div>
+   
+
 
     <style>
         .movie-display img
@@ -33,6 +42,5 @@
     </style>
 
     <script src="homeJs.js"></script>
-
 
 </div>

@@ -1,7 +1,24 @@
 <section>
 
+    <h1 id = "discussion-id" hidden>{{data._id}}</h1>
+
+    <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+    <button onClick="window.location.href = '/public/movie/{{data.movieId}}';" id="movie-btn">Go to Movie</button>
+
     <h1>{{data.discussionTitle}}</h1>
 
+    <h2>{{data.postCreatorUserName}}</h2>
     <p>{{data.discussionContent}}</p>
+
+    <div id="comments">
+        <ul>
+            {{#each data.replies}}
+                <li>
+                    <h3>{{this.commentorUsername}}</h3>
+                    <p>{{this.comment}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
 
 </section>

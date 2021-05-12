@@ -175,7 +175,7 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
     today=month+'/'+day+'/'+year;*/
 
     let newDiscussion = {
-        postCreatorId: user._id,
+        postCreatorUserName: user.userName,
         movieId: movieID,
         discussionTitle: discussionTitle,
         discussionContent: discussionContent,
@@ -246,7 +246,7 @@ async function CreateDiscussionReply(discussionID, username, comment){
         throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) is not an instance of an ObjectId.';
     }
 
-    const discussion = await discussionsCollection.findOne({_id: discussionID});
+    const discussion = await discussionsCollection.findOne({_id: parsedId});
     if(!discussion){
         throw "Discussion Not Found";
     }
@@ -257,21 +257,21 @@ async function CreateDiscussionReply(discussionID, username, comment){
         throw 'User not found.';
     }
 
-    let day = (today.getDate().toString()).padStart(2, '0');
+    let today = new Date();
+    /*let day = (today.getDate().toString()).padStart(2, '0');
     let month = ((today.getMonth()+1).toString()).padStart(2, '0');
     let year = (today.getFullYear()).toString();
-    let today=month+'/'+day+'/'+year;
+    let today=month+'/'+day+'/'+year;*/
 
     let newComment = {
-        commentorID: user._id,
+        commentorUsername: user.userName,
         dateOfPosting: today,
-        comment: comment,
-        replies: []
+        comment: comment
     }
 
     discussion.replies.push(newComment);
 
-    discussionsCollection.updateOne({ _id: discussionID }, { $set: discussion });
+    discussionsCollection.updateOne({ _id: parsedId }, { $set: discussion });
 
     return newComment;
 }

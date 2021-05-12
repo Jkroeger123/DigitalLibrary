@@ -201,4 +201,18 @@ router.get('/search', async(req, res) =>{
     res.render("search", {data: pageData});
 })
 
+router.post('/comment/:discussionID', async (req, res)=>{
+    let {comment} = req.body;
+
+    try {
+        await discussionData.CreateDiscussionReply(req.params.discussionID.toString(), req.session.user.username, comment);
+        res.json({username: req.session.user.username});
+    } catch (error) {
+        res.send(error);
+        console.log(error);
+    }
+    
+
+})
+
 module.exports = router;
