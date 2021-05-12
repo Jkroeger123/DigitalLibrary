@@ -1,15 +1,18 @@
 <section>
-    <h1>Login</h1>
+    <h1 class = "center-text">Login</h1>
 
+    <div class="flex-container">
         <form action="/login" method="POST" id="login-form">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" required>
-            <br><br>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-            <br><br>
-            <input type="submit">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+                <input type="submit"class="btn btn-primary">
+            </div> 
         </form>
+    </div>
+        
 
-        <button onClick="window.location.href = '/signup';" id="signupLink">Sign Up</button>
+        <button onClick="window.location.href = '/signup';" id="signupLink" class="btn btn-primary">Sign Up</button>
 </section>

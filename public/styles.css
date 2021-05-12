@@ -3,7 +3,6 @@ html, body, *
     font-family: 'Montserrat', sans-serif;
 }
 
-
 .logo
 {
     text-align: center;
@@ -14,13 +13,17 @@ html, body, *
     justify-content: space-evenly;
 }
 
-#loginLink
+#loginLink, #signupLink
 {
     position: fixed;
     top: 30px;
     right: 30px;
 }
 
+.center-text
+{
+    text-align: center;
+}
 
 #movie-list
 {
@@ -32,6 +35,29 @@ html, body, *
     text-align: center;
 }
 
+
+.form-flex
+{
+    text-align: right;
+}
+
+#submit-btn
+{
+    position: relative;
+    left: 50%;
+}
+
+.notFound
+{
+    text-align: center;
+    color: crimson;
+}
+
+.logo-btn:link, .logo-btn:visited, .logo-btn:hover,.logo-btn:active
+{
+    text-decoration: none;
+    color: black;
+}
 
 .carousel-indicators li {
     background-color: #999;
