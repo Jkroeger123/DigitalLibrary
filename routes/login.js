@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const userData = require('../data/users');
 const router = express.Router();
+const xss = require('xss');
 
 router.get('/', (req, res) => {
     
@@ -15,6 +16,9 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) =>{
 
     let { username, password } = req.body;
+
+    username = xss(username);
+    password = xss(password);
 
     if(!username || !password || typeof(username) != 'string' || typeof(password) != 'string' || username == "" || password == "")
     {
