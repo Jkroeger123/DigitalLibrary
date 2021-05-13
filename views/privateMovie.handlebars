@@ -1,57 +1,67 @@
 <h1 id = 'movie-id' hidden>{{data.movie.tmdbID}}</h1>
 
+<a href="/" class = 'home-btn'><h1>Back To Home</h1></a> 
 
-<button id="watchlist-btn">Add to Watch List</button>
-<button id = "discussion-btn">Create a Discussion</button>
-<button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+<h1 class = 'center-text'>{{data.tmdbMovie.title}}</h1>
 
-<br>
+<div class='flex-container' id="movie-container">
 
-<div id="rating-form">
+    <div id="movie-info">
+        <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster" class = 'movie-display'>
+        <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
+    </div>
 
-    <h2>Leave A Review</h2>
-
-    <form>
-        <label for="rating">Rating (1-10)</label>
-        <input type="number" name = "rating" id="rating" min="1" max="10" required>
+    <div class = 'btn-list'>
+        <button id="watchlist-btn" class = "btn btn-danger">Add to Watch List</button>
         <br>
-        <label for="review">Review</label>
-        <input type="text" name="review" id="review" required>
-        <br>
-        <button id="send-review">Send Review</button>
-    </form>
+        <button id = "discussion-btn" class = "btn btn-danger">Create a Discussion</button>
+    </div>
+
 </div>
 
-<div id="discussion-form" hidden>
+<div class='flex-container social-tab'>
 
-    <h2>Start a Discussion</h2>
+    <div id= "movie-discussions">
+        <h2>Discussions</h2>
+        <ul>
+            {{#each data.discussions}}
+                    <li>
+                        <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                    </li>
+            {{/each}}
+        </ul>
+    </div>
 
-    <form>
-        <label for="discussionTitle">Discussion Title</label>
-        <input type="text" name = "discussionTitle" id="discussionTitle" required>
-        <br>
-        <label for="discussionContent">Discussion Content</label>
-        <input type="text" name="discussionContent" id="discussionContent" required>
-        <br>
-        <button id="send-discussion">Create Discussion</button>
-    </form>
-</div>
+    <div id="rating-form">
 
-<div id="movie-info">
-    <h1>{{data.tmdbMovie.title}}</h1>
-    <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster">
-    <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
-</div>
+        <h2>Leave A Review</h2>
 
-<div id= "movie-discussions">
-    <h2>Discussions</h2>
-    <ul>
-        {{#each data.discussions}}
-                <li>
-                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
-                </li>
-        {{/each}}
-    </ul>
+        <form>
+            <label for="rating">Rating (1-10)</label>
+            <input type="number" name = "rating" id="rating" min="1" max="10" required>
+            <br>
+            <label for="review">Review</label>
+            <input type="text" name="review" id="review" required>
+            <br>
+            <button id="send-review">Send Review</button>
+        </form>
+    </div>
+
+    <div id="discussion-form" hidden>
+
+        <h2>Start a Discussion</h2>
+
+        <form>
+            <label for="discussionTitle">Discussion Title</label>
+            <input type="text" name = "discussionTitle" id="discussionTitle" required>
+            <br>
+            <label for="discussionContent">Discussion Content</label>
+            <input type="text" name="discussionContent" id="discussionContent" required>
+            <br>
+            <button id="send-discussion">Create Discussion</button>
+        </form>
+    </div>
+
 </div>
 
 

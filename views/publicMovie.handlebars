@@ -1,21 +1,30 @@
-<h1 id = "movie-id" hidden>{{data.movie.tmdbID}}</h1>
+<h1 id = 'movie-id' hidden>{{data.movie.tmdbID}}</h1>
 
-<button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+<a href="/" class = 'home-btn'><h1>Back To Home</h1></a> 
 
-<div id="movie-info">
-    <h1>{{data.tmdbMovie.title}}</h1>
-    <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster">
-    <h2>Average User Rating: {{data.movie.averageRating}}</h2>
+<h1 class = 'center-text'>{{data.tmdbMovie.title}}</h1>
+
+<div class='flex-container' id="movie-container">
+
+    <div id="movie-info">
+        <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster" class = 'movie-display'>
+        <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
+    </div>
+
 </div>
 
-<div id= "movie-discussions">
-    <h2>Discussions</h2>
-    <ul>
-        {{#each data.discussions}}
-                <li>
-                    <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
-                </li>
-        {{/each}}
-    </ul>
+<div class='flex-container social-tab'>
+
+    <div id= "movie-discussions">
+        <h2>Discussions</h2>
+        <ul>
+            {{#each data.discussions}}
+                    <li>
+                        <a href="/public/discussion/{{this._id}}">{{this.discussionTitle}}</a>
+                    </li>
+            {{/each}}
+        </ul>
+    </div>
+
 </div>
 
