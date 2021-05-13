@@ -1,20 +1,20 @@
 <div class="home">
-    <h1>Search</h1>
+    <h1 class = 'center-text'>Search</h1>
 
     <form id="searchForm">
         <label for="search_term"></label>
         <input type="text" id="search_term" required>
-        <button id="searchBtn">Search</button>
+        <button id="searchBtn" class="btn btn-primary">Search</button>
     </form>
 
-    <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
+    <a href="/" class = 'home-btn'><h1>Back To Home</h1></a> 
 
     <!--add the rest-->
-    <ul id = "movie-list">
+    <ul id = "movie-search">
         {{#each data.trending}}
-                <li>
+                <li class = 'movie-li'>
                     <div class = "movie-display">
-                        <a href="/public/movie/{{this.id}}"><img src=https://image.tmdb.org/t/p/w500{{this.poster_path}} alt=""></a>
+                        <a href="/public/movie/{{this.id}}"><img src=https://image.tmdb.org/t/p/w500{{this.poster_path}} alt="{{this.title}}"></a>
                     </div>   
                 </li>
         {{/each}}
@@ -29,14 +29,6 @@
                 </li>
         {{/each}}
     </ul>
-
-    <style>
-        .movie-display img
-        {
-            width: 10%;
-            height: 10%;
-        }
-    </style>
 
     <script src="/search.js"></script>
 

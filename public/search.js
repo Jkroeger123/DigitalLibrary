@@ -49,21 +49,21 @@
     {
 
 
-        $("#movie-list").empty();
+        $("#movie-search").empty();
 
         for(movie of movies)
         {
-            let li = $(`<li></li>`)
+            let li = $(`<li class = "movie-li"></li>`)
 
             let div = $(`<div class = "movie-display"></div>`);
 
-            let link = $(`<a href = "/private/movie/${movie.id}"><img src = https://image.tmdb.org/t/p/w500${movie.poster_path} alt=""></a>`)
+            let link = $(`<a href = "/private/movie/${movie.id}"><img src = https://image.tmdb.org/t/p/w500${movie.poster_path} alt="${movie.title}"></a>`)
 
             li.append(div);
 
             div.append(link);
 
-            $("#movie-list").append(div);
+            $("#movie-search").append(li);
         }
 
     }
