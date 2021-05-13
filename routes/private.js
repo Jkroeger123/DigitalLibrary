@@ -4,6 +4,7 @@ const movieData = require('../data/movies');
 const discussionData = require('../data/discussions');
 const userData = require('../data/users');
 const router = express.Router();
+const xss = require('xss');
 
 router.get('/', async(req, res) =>{
     
@@ -75,7 +76,7 @@ router.get('/watchlist', async(req, res)=>{
 
 router.post('/watchlist/:movieID', async (req, res)=>{
     try {
-        await userData.AddToWatchList(req.params.movieID, req.session.user.username);
+        await userData.AddToWatchList(xss(req.params.movieID), req.session.user.username);
         res.send("Added");
     } catch (error) {
         console.log(error);
@@ -86,7 +87,7 @@ router.post('/watchlist/:movieID', async (req, res)=>{
 
 router.post('/watchlist/remove/:movieID', async(req, res) =>{
     try {
-        await userData.RemoveFromWatchList(req.params.movieID, req.session.user.username);
+        await userData.RemoveFromWatchList(xss(req.params.movieID), req.session.user.username);
         res.send("Added");
     } catch (error) {
         res.send(error);
@@ -111,8 +112,11 @@ router.post('/discussion/:movieID', async (req, res)=>{
 
     let {discussionTitle, discussionContent} = req.body;
 
+    discussionTitle = xss(discussionTitle);
+    discussionContent = xss(discussionContent);
+
     try {
-        let discussion = await discussionData.CreateDiscussion(req.session.user.username, req.params.movieID, discussionTitle, discussionContent);
+        let discussion = await discussionData.CreateDiscussion(req.session.user.username, xss(req.params.movieID), discussionTitle, discussionContent);
         res.send(discussion._id.toString());
     } catch (error) {
         console.log(error);
@@ -131,8 +135,11 @@ router.post('/rate/:movieID', async (req, res)=>{
 
     let {review, rating} = req.body;
 
+    review = xss(review);
+    rating = xss(rating);
+
     try {
-        let newRating = await userData.RateMovie(req.params.movieID, rating, req.session.user.username);
+        let newRating = await userData.RateMovie(xss(req.params.movieID), rating, req.session.user.username);
         res.json({averageRating: newRating});
     } catch (error) {
         console.log(error);
@@ -204,8 +211,10 @@ router.get('/search', async(req, res) =>{
 router.post('/comment/:discussionID', async (req, res)=>{
     let {comment} = req.body;
 
+    comment = xss(comment);
+
     try {
-        await discussionData.CreateDiscussionReply(req.params.discussionID.toString(), req.session.user.username, comment);
+        await discussionData.CreateDiscussionReply(xss(req.params.discussionID.toString()), req.session.user.username, comment);
         res.json({username: req.session.user.username});
     } catch (error) {
         res.send(error);

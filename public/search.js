@@ -48,6 +48,7 @@
     function FillResults(movies)
     {
 
+
         $("#movie-list").empty();
 
         for(movie of movies)
