@@ -2,35 +2,37 @@
 
     <h1 id = "discussion-id" hidden>{{data._id}}</h1>
 
-    <button onClick="window.location.href = '/';" id="home-btn">Back to Home</button>
-    <button onClick="window.location.href = '/private/movie/{{data.movieId}}';" id="movie-btn">Go to Movie</button>
+    <a href="/" class = 'home-btn'><h1>Back To Home</h1></a> 
+    <button onClick="window.location.href = '/private/movie/{{data.movieId}}';" id="search-btn" class="btn btn-primary">Go to Movie</button>
 
-    <h1>{{data.discussionTitle}}</h1>
+    <h1 class = "center-text">{{data.discussionTitle}}</h1>
 
-    <h2>{{data.postCreatorUserName}}</h2>
-    <p>{{data.discussionContent}}</p>
+    <div id="discussion-content">
+        <h2>{{data.postCreatorUserName}}</h2>
+        <p>{{data.discussionContent}}</p>
 
-    <div id="comments">
-        <ul id="comment-list">
-            {{#each data.replies}}
-                <li>
-                    <h3>{{this.commentorUsername}}</h3>
-                    <p>{{this.comment}}</p>
-                </li>
-            {{/each}}
-        </ul>
+        <div id="comments">
+            <ul id="comment-list">
+                {{#each data.replies}}
+                    <li>
+                        <h3>{{this.commentorUsername}}</h3>
+                        <p>{{this.comment}}</p>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 
-    <div id="comment-form">
-        <h3>Add a Comment</h3>
+    
 
+    <div id="comment-form">
+        <h3 id = "center-text">Add a Comment</h3>
         <form>
             <label for="comment">Comment</label>
             <input type="text" name="comment" id="comment" required>
             <br>
-            <button id="send-comment">Add Comment</button>
+            <button id="send-comment" class="btn btn-primary">Add Comment</button>
         </form>
-
     </div>
 
     <script src = "/discussion.js"></script>

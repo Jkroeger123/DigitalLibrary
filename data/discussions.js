@@ -98,6 +98,7 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
     /* Create a discussion document with the provided parameters
         Fill in the unprovided schema values such as the date. Replies array, etc. */
 
+
     // Error checking
     if(!username){
         throw 'No username parameter is given to the CreateDiscussion(username, movieID, discussionTitle, discussionContent) function.';
@@ -157,7 +158,7 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
     }
 
     const moviesCollection = await movies();
-    const movie = await moviesCollection.findOne({ tmdbID: parseInt(id) });
+    const movie = await moviesCollection.findOne({ tmdbID: parseInt(movieID) });
     if(!movie){
         throw 'Movie not found.';
     }

@@ -6,9 +6,22 @@
 
 <div class='flex-container' id="movie-container">
 
-    <div id="movie-info">
-        <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster" class = 'movie-display'>
-        <h2 id="avg-rating">Average User Rating: {{data.movie.averageRating}}</h2>
+
+    <img src=https://image.tmdb.org/t/p/w500{{data.tmdbMovie.poster_path}} alt="{{data.tmdbMovie.title}} poster" id = 'movie-poster'>
+
+    <div class = "movie-info">
+        <h2 id="avg-rating">Average Rating: {{data.movie.averageRating}}</h2>
+        <div><h2>Overview: </h2><p>{{data.tmdbMovie.overview}}</p></div>
+        <div>
+            <h2>Genre: </h2> 
+            <ul>
+                {{#each data.tmdbMovie.genres}}
+                <li>
+                    {{this.name}}
+                </li> 
+                {{/each}}
+            </ul>
+        </div>
     </div>
 
     <div class = 'btn-list'>
@@ -19,7 +32,7 @@
 
 </div>
 
-<div class='flex-container social-tab'>
+<div class='social-tab'>
 
     <div id= "movie-discussions">
         <h2>Discussions</h2>
@@ -32,7 +45,7 @@
         </ul>
     </div>
 
-    <div id="rating-form">
+    <div id="rating-form" class = "movie-form">
 
         <h2>Leave A Review</h2>
 
@@ -43,11 +56,11 @@
             <label for="review">Review</label>
             <input type="text" name="review" id="review" required>
             <br>
-            <button id="send-review">Send Review</button>
+            <button id="send-review"  class="btn btn-primary">Send Review</button>
         </form>
     </div>
 
-    <div id="discussion-form" hidden>
+    <div id="discussion-form" class = "movie-form"hidden>
 
         <h2>Start a Discussion</h2>
 
@@ -58,7 +71,7 @@
             <label for="discussionContent">Discussion Content</label>
             <input type="text" name="discussionContent" id="discussionContent" required>
             <br>
-            <button id="send-discussion">Create Discussion</button>
+            <button id="send-discussion"  class="btn btn-primary">Create Discussion</button>
         </form>
     </div>
 

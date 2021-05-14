@@ -8,6 +8,17 @@ html, body, *
     text-align: center;
 }
 
+.movie-info
+{
+
+    width: 33%;
+}
+
+#movie-poster
+{
+    max-width: 20%;
+}
+
 .movie-display
 {
     height: 50%;   
@@ -34,7 +45,6 @@ html, body, *
 {
     list-style-type: none;
     position: relative;
-    left:33%;
 }
 
 #movie-list
@@ -44,10 +54,11 @@ html, body, *
 
 #movie-search
 {
-    width: 33%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    position: relative;
+    left: 10%;
+    display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 #movie-label
@@ -123,3 +134,29 @@ html, body, *
 .carousel-inner img {
     margin: auto;
 }
+
+#discussion-content
+{
+    position: relative;
+    left: 45%;
+}
+
+#comment-form
+{
+    position: relative;
+    left: 45%;
+}
+
+.movie-form
+{
+    padding-left: 16%;
+}
+
+.social-tab
+{
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    margin-left: 15%;
+}
+

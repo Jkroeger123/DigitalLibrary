@@ -53,6 +53,8 @@
 
         for(movie of movies)
         {
+            if(!movie.poster_path) continue;
+
             let li = $(`<li class = "movie-li"></li>`)
 
             let div = $(`<div class = "movie-display"></div>`);
