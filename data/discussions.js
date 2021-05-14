@@ -13,7 +13,7 @@ async function GetRecentDiscussions(){
 
     let discussionList = await discussionsCollection.find({}).toArray();
 
-    let sortedDiscussionList=discussionList.sort((a, b) => new Date(b.dateOfReview) - new Date(a.dateOfReview));
+    let sortedDiscussionList=discussionList.sort((a, b) => a.dateOfReview - b.dateOfReview);
     let result = [];
 
     // Just an example N=20, is subject to change

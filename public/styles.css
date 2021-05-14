@@ -139,6 +139,7 @@ html, body, *
 {
     position: relative;
     left: 45%;
+    max-width: 33%;
 }
 
 #comment-form
