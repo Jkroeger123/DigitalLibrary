@@ -5,7 +5,7 @@
     <div class = "flex-container">
         <form action="/signup" method="POST" class = 'form-flex'>
             <label for="userName">Username</label>
-            <input type="text" name = "userName" id = "userName" required>
+            <input type="text" name = "userName" id = "userName" required pattern="^\S+$">
 
             <br>
 
@@ -15,17 +15,17 @@
             <br>
 
             <label for="firstName">First Name</label>
-            <input type="text" name = "firstName" id = "firstName" required>
+            <input type="text" name = "firstName" id = "firstName" required pattern="^\S+$">
 
             <br>
 
             <label for="lastName">Last Name</label>
-            <input type="text" name= "lastName" id="lastName" required>
+            <input type="text" name= "lastName" id="lastName" required pattern="^\S+$">
 
             <br>
 
             <label for="Email">Email</label>
-            <input type="text" name = "Email" id="Email" required>
+            <input type="text" name = "Email" id="Email" required pattern="^\S+$">
 
             <br>
 
