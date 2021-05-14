@@ -75,6 +75,9 @@ router.get('/watchlist', async(req, res)=>{
 });
 
 router.post('/watchlist/:movieID', async (req, res)=>{
+
+    if(!req.params.movieID || req.params.movieID.trim() == "") return res.send("No Parameter Movie ID Provied!");
+
     try {
         await userData.AddToWatchList(xss(req.params.movieID), req.session.user.username);
         res.send("Added");
@@ -86,6 +89,9 @@ router.post('/watchlist/:movieID', async (req, res)=>{
 });
 
 router.post('/watchlist/remove/:movieID', async(req, res) =>{
+
+    if(!req.params.movieID || req.params.movieID.trim() == "") return res.send("No Parameter Movie ID Provied!");
+
     try {
         await userData.RemoveFromWatchList(xss(req.params.movieID), req.session.user.username);
         res.send("Added");
@@ -109,14 +115,17 @@ router.get('/discussion/:discussionID', async(req, res)=>{
 //Route To Create a discussion
 router.post('/discussion/:movieID', async (req, res)=>{
     
+    let {discussionTitle, discussionContent, isSpoiler} = req.body;
+    console.log(isSpoiler);
+    if(isSpoiler == undefined || !discussionTitle || !discussionContent || discussionContent.trim() == "" || discussionTitle.trim() == "") return res.send("Error");
 
-    let {discussionTitle, discussionContent} = req.body;
+    
 
     discussionTitle = xss(discussionTitle);
     discussionContent = xss(discussionContent);
 
     try {
-        let discussion = await discussionData.CreateDiscussion(req.session.user.username, xss(req.params.movieID), discussionTitle, discussionContent);
+        let discussion = await discussionData.CreateDiscussion(req.session.user.username, xss(req.params.movieID), discussionTitle, discussionContent, isSpoiler);
         res.send(discussion._id.toString());
     } catch (error) {
         console.log(error);
@@ -134,6 +143,8 @@ router.get('/rating', async(req, res)=>{
 router.post('/rate/:movieID', async (req, res)=>{
 
     let {review, rating} = req.body;
+
+    if(!review || !rating || typeof(review) != 'string' || review.trim() == "") return res.send("Error");
 
     review = xss(review);
     rating = xss(rating);
@@ -210,6 +221,8 @@ router.get('/search', async(req, res) =>{
 
 router.post('/comment/:discussionID', async (req, res)=>{
     let {comment} = req.body;
+
+    if(!comment || typeof(comment) != "string" || comment.trim() == "") return res.send("Error");
 
     comment = xss(comment);
 

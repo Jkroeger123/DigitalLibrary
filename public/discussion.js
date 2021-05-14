@@ -1,5 +1,19 @@
 (function($){
 
+
+    if($("#spoilerTag").text() == "on")
+    {
+        $("#discussion-wrapper").hide();
+        $("#spoiler-warning").show();
+        $("#spoiler-warning").click(function(event){
+            $("#spoiler-warning").hide();
+            $("#discussion-wrapper").show();
+        });
+    }else
+    {
+        $("#spoiler-warning").hide();
+    }
+
     $("#send-comment").click(function(event){
         event.preventDefault();
 

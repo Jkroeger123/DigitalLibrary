@@ -16,12 +16,14 @@
         //Error handling, should do more??
         if($("#discussionTitle").val() == undefined || $("#discussionTitle").val().trim() == "") return;
         if($("#discussionContent").val() == undefined || $("#discussionContent").val().trim() == "") return;
+        if($("#isSpoiler").val() == undefined) return;
 
         let requestConfig = {
             method: 'POST',
             url: `/private/discussion/${$('#movie-id').html()}`,
             data: {discussionTitle: $("#discussionTitle").val(),
-                    discussionContent: $("#discussionContent").val()
+                    discussionContent: $("#discussionContent").val(),
+                    isSpoiler: $("#isSpoiler").val()
                    }
         };
 

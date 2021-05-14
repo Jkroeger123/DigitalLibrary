@@ -94,10 +94,11 @@ async function GetDiscussionByID(id){
     }
 }
 
-async function CreateDiscussion(username, movieID, discussionTitle, discussionContent){
+async function CreateDiscussion(username, movieID, discussionTitle, discussionContent, isSpoiler){
     /* Create a discussion document with the provided parameters
         Fill in the unprovided schema values such as the date. Replies array, etc. */
 
+    if(!isSpoiler) isSpoiler = false;
 
     // Error checking
     if(!username){
@@ -181,6 +182,7 @@ async function CreateDiscussion(username, movieID, discussionTitle, discussionCo
         discussionTitle: discussionTitle,
         discussionContent: discussionContent,
         dateOfPosting: today,
+        isSpoiler: isSpoiler,
         replies: []
     };
 
