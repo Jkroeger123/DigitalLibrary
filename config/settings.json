@@ -1,6 +1,9 @@
 {
     "mongoConfig": {
-      "serverUrl": "mongodb://localhost:27017/",
+      "serverUrl": "mongodb+srv://dbUser:123@cluster0.gk8l4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
       "database": "FinalProjectDB"
     }
   }
+
+  
+ 
