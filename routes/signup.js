@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const userData = require('../data/users');
-const { default: xss } = require('xss');
+const xss = require('xss');
 const router = express.Router();
 
 router.get('/', (req, res) =>{
