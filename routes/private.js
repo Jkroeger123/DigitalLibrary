@@ -179,6 +179,8 @@ router.post('/rate/:movieID', async (req, res)=>{
 
     if(parseInt(rating) > 10) rating = 10;
 
+    if(parseInt(rating) < 1) rating = 1;
+
     if(!review || !rating || typeof(review) != 'string' || review.trim() == "") return res.send("Error");
 
     review = xss(review);
