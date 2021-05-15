@@ -112,6 +112,38 @@ router.get('/discussion/:discussionID', async(req, res)=>{
 
 });
 
+router.get('/trending', async(req, res)=>{
+    //Fetch Trending Movies from DB
+
+    let trendingMovies;
+    let recentDiscussions;
+
+    let moviesObjects = [];
+
+    try {
+        trendingMovies = await movieData.GetTrendingMovies();
+
+        for(id of trendingMovies)
+        {
+            let data = await movieData.GetTMDBMovie(id);
+            moviesObjects.push(data);
+        }
+
+        recentDiscussions = await discussionData.GetRecentDiscussions();
+    } catch (error) {
+        console.log(error);
+        //deal with error somehow
+    }
+    
+
+    let pageData = {
+        trending: moviesObjects,
+        recentDiscussions: recentDiscussions
+    }
+
+    res.render("userTrending", {data: pageData});
+});
+
 //Route To Create a discussion
 router.post('/discussion/:movieID', async (req, res)=>{
     

@@ -135,6 +135,13 @@ html, body, *
     margin: auto;
 }
 
+#trendingLink
+{
+    position: fixed;
+    top: 30px;
+    left: 130px;
+}
+
 #discussion-content
 {
     position: relative;
