@@ -148,9 +148,10 @@ router.get('/trending', async(req, res)=>{
 router.post('/discussion/:movieID', async (req, res)=>{
     
     let {discussionTitle, discussionContent, isSpoiler} = req.body;
-    console.log(isSpoiler);
-    if(isSpoiler == undefined || !discussionTitle || !discussionContent || discussionContent.trim() == "" || discussionTitle.trim() == "") return res.send("Error");
 
+    if(isSpoiler == undefined) isSpoiler = "off";
+
+    if(isSpoiler == undefined || !discussionTitle || !discussionContent || discussionContent.trim() == "" || discussionTitle.trim() == "") return res.send("Error");
     
 
     discussionTitle = xss(discussionTitle);
