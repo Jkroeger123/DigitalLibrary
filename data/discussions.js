@@ -243,7 +243,7 @@ async function CreateDiscussionReply(discussionID, username, comment){
 
     const discussionsCollection  = await discussions();
 
-    let parsedId = ObjectId(id);
+    let parsedId = ObjectId(discussionID);
 
     if(!(parsedId instanceof ObjectId)){
         throw 'Input discussionID in CreateDiscussionReply(discussionID, username, comment) is not an instance of an ObjectId.';
